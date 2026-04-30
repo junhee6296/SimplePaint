@@ -38,6 +38,10 @@ namespace SimplePaint
             picCanvas.MouseMove += PicCanvas_MouseMove;
             picCanvas.MouseUp += PicCanvas_MouseUp;
             picCanvas.Paint += PicCanvas_Paint;
+
+            btnLine.Click += btnLine_Click; 
+            btnRectangle.Click += btnRectangle_Click; 
+            btnCircle.Click += btnCircle_Click; 
         }
 
         // --- 마우스 이벤트 핸들러 ---
@@ -103,6 +107,22 @@ namespace SimplePaint
                     g.DrawEllipse(pen, x, y, width, height);
                     break;
             }
+        }
+
+        // --- 도형 선택 버튼 이벤트 ---
+        private void btnLine_Click(object sender, EventArgs e)
+        {
+            currentTool = ToolType.Line; 
+        }
+
+        private void btnRectangle_Click(object sender, EventArgs e)
+        {
+            currentTool = ToolType.Rectangle; 
+        }
+
+        private void btnCircle_Click(object sender, EventArgs e)
+        {
+            currentTool = ToolType.Circle; 
         }
     }
 }
