@@ -50,6 +50,7 @@
             // 
             // picCanvas
             // 
+            picCanvas.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             picCanvas.Location = new Point(12, 184);
             picCanvas.Name = "picCanvas";
             picCanvas.Size = new Size(952, 397);
@@ -69,6 +70,7 @@
             // 
             // DiaGroupBox
             // 
+            DiaGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             DiaGroupBox.Controls.Add(btnCircle);
             DiaGroupBox.Controls.Add(btnRectangle);
             DiaGroupBox.Controls.Add(btnLine);
@@ -121,6 +123,7 @@
             // 
             // ColorGroupBox
             // 
+            ColorGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ColorGroupBox.Controls.Add(cmbColor);
             ColorGroupBox.Font = new Font("서울남산체 M", 12F, FontStyle.Bold, GraphicsUnit.Point, 129);
             ColorGroupBox.Location = new Point(313, 78);
@@ -140,6 +143,7 @@
             // 
             // LineGroupBox
             // 
+            LineGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             LineGroupBox.Controls.Add(trbLineWidth);
             LineGroupBox.Font = new Font("서울남산체 M", 12F, FontStyle.Bold, GraphicsUnit.Point, 129);
             LineGroupBox.Location = new Point(496, 78);
@@ -158,6 +162,7 @@
             // 
             // btnOpenFile
             // 
+            btnOpenFile.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnOpenFile.BackColor = SystemColors.Info;
             btnOpenFile.Font = new Font("서울알림체 TTF Bold", 15.75F, FontStyle.Bold);
             btnOpenFile.Location = new Point(725, 99);
@@ -169,6 +174,7 @@
             // 
             // btnSaveFile
             // 
+            btnSaveFile.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnSaveFile.BackColor = SystemColors.ActiveCaption;
             btnSaveFile.Font = new Font("서울알림체 TTF Bold", 15.75F, FontStyle.Bold);
             btnSaveFile.Location = new Point(845, 99);

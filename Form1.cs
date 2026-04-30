@@ -41,7 +41,23 @@ namespace SimplePaint
 
             btnLine.Click += btnLine_Click; 
             btnRectangle.Click += btnRectangle_Click; 
-            btnCircle.Click += btnCircle_Click; 
+            btnCircle.Click += btnCircle_Click;
+
+            // --- 색상 콤보박스 설정 및 이벤트 연결 ---
+            cmbColor.SelectedIndexChanged += cmbColor_SelectedIndexChanged;
+
+            cmbColor.Items.Add("Black 검정"); 
+            cmbColor.Items.Add("Red 빨강"); 
+            cmbColor.Items.Add("Blue 파랑"); 
+            cmbColor.Items.Add("Green 녹색");
+
+            cmbColor.SelectedIndex = 0; // 기본값: Black
+
+            // --- 선 두께 트랙바 설정 및 이벤트 연결 ---
+            trbLineWidth.Minimum = 1; // 최소값
+            trbLineWidth.Maximum = 10; // 최대값
+            trbLineWidth.Value = 2; // 기본 두께
+            trbLineWidth.ValueChanged += trbLineWidth_ValueChanged; 
         }
 
         // --- 마우스 이벤트 핸들러 ---
@@ -123,6 +139,37 @@ namespace SimplePaint
         private void btnCircle_Click(object sender, EventArgs e)
         {
             currentTool = ToolType.Circle; 
+        }
+
+        // --- 색상 선택 이벤트 핸들러 ---
+        private void cmbColor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // 선택된 인덱스에 따라 색상 변경
+            switch (cmbColor.SelectedIndex)
+            {
+                case 0: // Black 검정
+                    currentColor = Color.Black; 
+            break; 
+        case 1: // Red 빨강
+                    currentColor = Color.Red; 
+            break; 
+        case 2: // Blue 파랑
+                    currentColor = Color.Blue; 
+            break; 
+        case 3: // Green 녹색
+                    currentColor = Color.Green; 
+            break; 
+        default:
+                    currentColor = Color.Black; 
+            break; 
+    }
+        }
+
+        // --- 선 두께 조절 이벤트 핸들러 ---
+        private void trbLineWidth_ValueChanged(object sender, EventArgs e)
+        {
+            // 트랙바의 현재 값으로 선 두께 갱신
+            currentLineWidth = trbLineWidth.Value; 
         }
     }
 }
