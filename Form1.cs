@@ -162,7 +162,7 @@ namespace SimplePaint
         default:
                     currentColor = Color.Black; 
             break; 
-    }
+            }
         }
 
         // --- 선 두께 조절 이벤트 핸들러 ---
@@ -170,6 +170,47 @@ namespace SimplePaint
         {
             // 트랙바의 현재 값으로 선 두께 갱신
             currentLineWidth = trbLineWidth.Value; 
+        }
+
+        // --- 이미지 저장 핸들러 ---
+        private void btnSaveFile_Click(object sender, EventArgs e)
+        {
+            // 1. 파일 저장을 위한 대화상자 생성
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Title = "그림 저장하기";
+
+                // 2. 저장할 파일 포맷 3가지 설정 (.png, .jpg, .bmp)
+                saveFileDialog.Filter = "PNG 이미지 (*.png)|*.png|JPEG 이미지 (*.jpg)|*.jpg|비트맵 이미지 (*.bmp)|*.bmp";
+                saveFileDialog.DefaultExt = "png"; // 기본 확장자 지정
+                saveFileDialog.AddExtension = true;
+
+                // 3. 대화상자를 띄우고 사용자가 '저장'을 눌렀는지 확인
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // 사용자가 선택한 확장자 확인
+                    string extension = System.IO.Path.GetExtension(saveFileDialog.FileName).ToLower();
+                    ImageFormat format = ImageFormat.Png; // 기본 포맷 (무손실 압축)
+
+                    switch (extension)
+                    {
+                        case ".jpg":
+                        case ".jpeg":
+                            format = ImageFormat.Jpeg; // (손실 압축)
+                            break;
+                        case ".bmp":
+                            format = ImageFormat.Bmp; // (압축 없음)
+                            break;
+                    }
+
+                    // 4. 캔버스의 이미지를 선택한 포맷으로 지정된 경로에 저장
+                    if (canvasBitmap != null)
+                    {
+                        canvasBitmap.Save(saveFileDialog.FileName, format);
+                        MessageBox.Show("그림이 성공적으로 저장되었습니다!", "저장 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
         }
     }
 }
