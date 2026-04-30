@@ -9,12 +9,14 @@
   - Label, GroupBox, Button, PictureBox, TrackBar, ComboBox
 - 사용한 기술과 구현한 기능:
   - Visual Studio를 이용하여 UI 디자인
-  - case로 색상 선택 용이하게 함
+  - case로 색상 선택, 파일 포맷 선택 등을 용이하게 함
   - 버튼 click 이벤트 연결로 도형 선택 및 이미지 저장,불러오기 기능 구현
   - groupbox로 효율적인 영역 묶기
   - picturebox로 사진 불러와서 그 위에 그림 그리기 가능
   - enum으로 도형 타입 추가
   - if문으로 그리기 상태 업데이트
+  - SaveFileDialog로 파일 저장 기능 구현
+  - 파일 저장 후 성공 알림을 Messagebox로 출력
 
 
 
@@ -52,8 +54,12 @@
 ![과제3 실행화면](img/3.png)
 
 - 과제 내용
-
+  - png, bmp, jpg 중 선택하여 그린 내용을 사진으로 저장할 수 있음
+  - 저장 성공 시 저장 성공 메시지박스 띄움
 - 구현 내용과 기능 설명
+  - SaveFileDialog 기능으로 저장 팝업 열기
+  - format의 case에 따라 압축 형태 설정
+  - type 검사 후 저장 성공 시 MessageBox 출력
 
 
 
