@@ -41,19 +41,26 @@
             trbLineWidth = new TrackBar();
             btnOpenFile = new Button();
             btnSaveFile = new Button();
+            pnlCanvas = new Panel();
+            trbGroupBox = new GroupBox();
+            trbZoom = new TrackBar();
             ((System.ComponentModel.ISupportInitialize)picCanvas).BeginInit();
             DiaGroupBox.SuspendLayout();
             ColorGroupBox.SuspendLayout();
             LineGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trbLineWidth).BeginInit();
+            pnlCanvas.SuspendLayout();
+            trbGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)trbZoom).BeginInit();
             SuspendLayout();
             // 
             // picCanvas
             // 
-            picCanvas.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            picCanvas.Location = new Point(12, 184);
+            picCanvas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            picCanvas.Location = new Point(0, 0);
             picCanvas.Name = "picCanvas";
             picCanvas.Size = new Size(952, 397);
+            picCanvas.SizeMode = PictureBoxSizeMode.StretchImage;
             picCanvas.TabIndex = 0;
             picCanvas.TabStop = false;
             // 
@@ -70,7 +77,6 @@
             // 
             // DiaGroupBox
             // 
-            DiaGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             DiaGroupBox.Controls.Add(btnCircle);
             DiaGroupBox.Controls.Add(btnRectangle);
             DiaGroupBox.Controls.Add(btnLine);
@@ -123,7 +129,6 @@
             // 
             // ColorGroupBox
             // 
-            ColorGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ColorGroupBox.Controls.Add(cmbColor);
             ColorGroupBox.Font = new Font("서울남산체 M", 12F, FontStyle.Bold, GraphicsUnit.Point, 129);
             ColorGroupBox.Location = new Point(313, 78);
@@ -143,7 +148,6 @@
             // 
             // LineGroupBox
             // 
-            LineGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             LineGroupBox.Controls.Add(trbLineWidth);
             LineGroupBox.Font = new Font("서울남산체 M", 12F, FontStyle.Bold, GraphicsUnit.Point, 129);
             LineGroupBox.Location = new Point(496, 78);
@@ -156,47 +160,79 @@
             // trbLineWidth
             // 
             trbLineWidth.Location = new Point(6, 34);
+            trbLineWidth.Maximum = 20;
             trbLineWidth.Name = "trbLineWidth";
             trbLineWidth.Size = new Size(211, 45);
             trbLineWidth.TabIndex = 0;
             // 
             // btnOpenFile
             // 
-            btnOpenFile.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnOpenFile.BackColor = SystemColors.Info;
             btnOpenFile.Font = new Font("서울알림체 TTF Bold", 15.75F, FontStyle.Bold);
-            btnOpenFile.Location = new Point(725, 99);
+            btnOpenFile.Location = new Point(731, 23);
             btnOpenFile.Name = "btnOpenFile";
-            btnOpenFile.Size = new Size(114, 68);
+            btnOpenFile.Size = new Size(114, 49);
             btnOpenFile.TabIndex = 5;
             btnOpenFile.Text = "열기";
             btnOpenFile.UseVisualStyleBackColor = false;
+            btnOpenFile.Click += btnOpenFile_Click;
             // 
             // btnSaveFile
             // 
-            btnSaveFile.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnSaveFile.BackColor = SystemColors.ActiveCaption;
             btnSaveFile.Font = new Font("서울알림체 TTF Bold", 15.75F, FontStyle.Bold);
-            btnSaveFile.Location = new Point(845, 99);
+            btnSaveFile.Location = new Point(851, 23);
             btnSaveFile.Name = "btnSaveFile";
-            btnSaveFile.Size = new Size(114, 68);
+            btnSaveFile.Size = new Size(114, 49);
             btnSaveFile.TabIndex = 6;
             btnSaveFile.Text = "저장";
             btnSaveFile.UseVisualStyleBackColor = false;
             btnSaveFile.Click += btnSaveFile_Click;
+            // 
+            // pnlCanvas
+            // 
+            pnlCanvas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlCanvas.AutoScroll = true;
+            pnlCanvas.Controls.Add(picCanvas);
+            pnlCanvas.Location = new Point(12, 184);
+            pnlCanvas.Name = "pnlCanvas";
+            pnlCanvas.Size = new Size(952, 397);
+            pnlCanvas.TabIndex = 7;
+            // 
+            // trbGroupBox
+            // 
+            trbGroupBox.Controls.Add(trbZoom);
+            trbGroupBox.Font = new Font("서울남산체 M", 12F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            trbGroupBox.Location = new Point(725, 78);
+            trbGroupBox.Name = "trbGroupBox";
+            trbGroupBox.Size = new Size(239, 100);
+            trbGroupBox.TabIndex = 5;
+            trbGroupBox.TabStop = false;
+            trbGroupBox.Text = "그림판 확대/축소";
+            // 
+            // trbZoom
+            // 
+            trbZoom.Location = new Point(6, 34);
+            trbZoom.Maximum = 500;
+            trbZoom.Minimum = 1;
+            trbZoom.Name = "trbZoom";
+            trbZoom.Size = new Size(211, 45);
+            trbZoom.TabIndex = 0;
+            trbZoom.Value = 1;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(976, 593);
+            Controls.Add(trbGroupBox);
+            Controls.Add(pnlCanvas);
             Controls.Add(btnSaveFile);
             Controls.Add(btnOpenFile);
             Controls.Add(LineGroupBox);
             Controls.Add(ColorGroupBox);
             Controls.Add(DiaGroupBox);
             Controls.Add(lblAppName);
-            Controls.Add(picCanvas);
             Name = "Form1";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)picCanvas).EndInit();
@@ -205,6 +241,10 @@
             LineGroupBox.ResumeLayout(false);
             LineGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trbLineWidth).EndInit();
+            pnlCanvas.ResumeLayout(false);
+            trbGroupBox.ResumeLayout(false);
+            trbGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)trbZoom).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -223,5 +263,8 @@
         private Button btnCircle;
         private Button btnRectangle;
         private Button btnLine;
+        private Panel pnlCanvas;
+        private GroupBox trbGroupBox;
+        private TrackBar trbZoom;
     }
 }

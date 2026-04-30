@@ -57,7 +57,10 @@ namespace SimplePaint
             trbLineWidth.Minimum = 1; // 최소값
             trbLineWidth.Maximum = 10; // 최대값
             trbLineWidth.Value = 2; // 기본 두께
-            trbLineWidth.ValueChanged += trbLineWidth_ValueChanged; 
+            trbLineWidth.ValueChanged += trbLineWidth_ValueChanged;
+
+            // 확대/축소
+            trbZoom.ValueChanged += trbZoom_ValueChanged;
         }
 
         // --- 마우스 이벤트 핸들러 ---
@@ -210,6 +213,49 @@ namespace SimplePaint
                         MessageBox.Show("그림이 성공적으로 저장되었습니다!", "저장 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
+            }
+        }
+
+        private void btnOpenFile_Click(object sender, EventArgs e)
+        {
+            // 1. 파일 읽기를 위한 대화상자 생성
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "이미지 불러오기";
+                openFileDialog.Filter = "이미지 파일 (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp|모든 파일 (*.*)|*.*";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // 2. 외부 이미지 파일 읽기
+                    Image loadedImage = Image.FromFile(openFileDialog.FileName);
+
+                    // 3. 읽어 들인 이미지를 바탕으로 새로운 캔버스(비트맵) 생성
+                    canvasBitmap = new Bitmap(loadedImage);
+
+                    // 4. 새 캔버스에 그리기 도구(Graphics) 다시 연결
+                    canvasGraphics = Graphics.FromImage(canvasBitmap);
+
+                    // 5. 픽쳐박스에 이미지 반영 및 크기 동기화
+                    picCanvas.Image = canvasBitmap;
+                    picCanvas.Width = canvasBitmap.Width;
+                    picCanvas.Height = canvasBitmap.Height;
+
+                    // 줌 배율 초기화
+                    trbZoom.Value = 100;
+                }
+            }
+        }
+
+        private void trbZoom_ValueChanged(object sender, EventArgs e)
+        {
+            if (canvasBitmap != null)
+            {
+                // 트랙바 값(1~500)을 백분율(0.01~5.0)로 변환
+                float scaleFactor = trbZoom.Value / 100f;
+
+                // 확대/축소 비율에 맞춰 PictureBox 크기 조정
+                picCanvas.Width = (int)(canvasBitmap.Width * scaleFactor);
+                picCanvas.Height = (int)(canvasBitmap.Height * scaleFactor);
             }
         }
     }
