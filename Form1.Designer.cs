@@ -56,7 +56,6 @@
             // 
             // picCanvas
             // 
-            picCanvas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             picCanvas.Location = new Point(0, 0);
             picCanvas.Name = "picCanvas";
             picCanvas.Size = new Size(952, 397);
@@ -191,7 +190,6 @@
             // 
             // pnlCanvas
             // 
-            pnlCanvas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlCanvas.AutoScroll = true;
             pnlCanvas.Controls.Add(picCanvas);
             pnlCanvas.Location = new Point(12, 184);
@@ -234,7 +232,7 @@
             Controls.Add(DiaGroupBox);
             Controls.Add(lblAppName);
             Name = "Form1";
-            Text = "Form1";
+            Text = " ";
             ((System.ComponentModel.ISupportInitialize)picCanvas).EndInit();
             DiaGroupBox.ResumeLayout(false);
             ColorGroupBox.ResumeLayout(false);
