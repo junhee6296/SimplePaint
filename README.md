@@ -36,8 +36,14 @@
 ![과제2 실행화면](img/2.png)
 
 - 과제 내용
-
+  - Button 메뉴에서 사각형, 원, 선 중 선택해 그리기 
+  - ComboBox에서 색상 선택 
+  - TrackBar로 두께 선택 
 - 구현 내용과 기능 설명
+  - MouseEvent를 사용해서 마우스 클릭, 클릭 떼기, 움직이기로 그리기 상태 업데이트
+  - x, y, width, height 변수를 적용하여 도구를 switch할 때마다 각 case에서 필요한 변수만 가져와서 용이하게 그리게 함
+  - 색상 선택 또한 인덱스 번호 case에 따라서 적용함
+  - 두께는 currentLineWidth = trbLineWidth.Value; 코드처럼 작성하여 트랙바의 값에 비례해서 두껍게/얇게 되도록 함
 
 
 ## 실행 화면 (과제3)
