@@ -242,7 +242,6 @@ namespace SimplePaint
 
         private void btnOpenFile_Click(object sender, EventArgs e)
         {
-            // 1. 파일 읽기를 위한 대화상자 생성
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Title = "이미지 불러오기";
@@ -250,26 +249,36 @@ namespace SimplePaint
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // 2. 외부 이미지 파일 읽기
-                    Image loadedImage = Image.FromFile(openFileDialog.FileName);
+                    try
+                    {
+                        // 2. FileStream을 사용해 이미지를 메모리에만 올리고 파일 잠금을 즉시 해제합니다.
+                        using (System.IO.FileStream fs = new System.IO.FileStream(openFileDialog.FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                        {
+                            Image loadedImage = Image.FromStream(fs);
 
-                    // 3. 읽어 들인 이미지를 바탕으로 새로운 캔버스(비트맵) 생성
-                    canvasBitmap = new Bitmap(loadedImage);
+                            // 3. 읽어 들인 이미지를 바탕으로 새로운 캔버스(비트맵) 생성
+                            canvasBitmap = new Bitmap(loadedImage);
+                        } // using 블록이 끝나면서 fs는 안전하게 닫힙니다.
 
-                    // 4. 새 캔버스에 그리기 도구(Graphics) 다시 연결
-                    canvasGraphics = Graphics.FromImage(canvasBitmap);
+                        // 4. 새 캔버스에 그리기 도구(Graphics) 다시 연결
+                        canvasGraphics = Graphics.FromImage(canvasBitmap);
 
-                    // 5. 픽쳐박스에 이미지 반영 및 크기 동기화
-                    picCanvas.Image = canvasBitmap;
-                    picCanvas.Width = canvasBitmap.Width;
-                    picCanvas.Height = canvasBitmap.Height;
+                        // 5. 픽쳐박스에 이미지 반영 및 크기 동기화
+                        picCanvas.Image = canvasBitmap;
+                        picCanvas.Width = canvasBitmap.Width;
+                        picCanvas.Height = canvasBitmap.Height;
 
-                    // 줌 배율 초기화
-                    trbZoom.Value = 100;
+                        // 줌 배율 초기화
+                        trbZoom.Value = 100;
+                    }
+                    catch (Exception ex)
+                    {
+                        // 이미지가 아니거나 손상된 파일을 열었을 때 프로그램이 죽지 않도록 예외 처리
+                        MessageBox.Show("이미지 파일을 열 수 없습니다. 파일이 손상되었거나 지원하지 않는 형식입니다.\n\n오류 내용: " + ex.Message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
-
         private void trbZoom_ValueChanged(object sender, EventArgs e)
         {
             if (canvasBitmap != null)

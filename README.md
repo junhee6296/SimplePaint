@@ -6,7 +6,7 @@
 - 사용한 플랫폼:
   - C#, .NET Windows Forms, Visual Studio, GitHub
 - 사용한 컨트롤:
-  - Label, GroupBox, Button, PictureBox, TrackBar, ComboBox
+  - Label, GroupBox, Button, PictureBox, TrackBar, ComboBox, pannel
 - 사용한 기술과 구현한 기능:
   - Visual Studio를 이용하여 UI 디자인
   - case로 색상 선택, 파일 포맷 선택 등을 용이하게 함
@@ -17,7 +17,8 @@
   - if문으로 그리기 상태 업데이트
   - SaveFileDialog로 파일 저장 기능 구현
   - 파일 저장 후 성공 알림을 Messagebox로 출력
-
+  - openFileDialog로 파일 열기
+  - TrackBar로 선 두께, 캔버스 확대 기능 구현
 
 
 ## 실행 화면 (과제1)
@@ -66,8 +67,16 @@
 ## 실행 화면 (과제4)
 - 과제4 코드의 실행 스크린샷
 
+![과제4-1 실행화면](img/4-2.png)
 ![과제4 실행화면](img/4.png)
 
 - 과제 내용
-
+  - 사진 불러오기 기능 추가
+  - 확대 축소 기능 추가
 - 구현 내용과 기능 설명
+  - openFileDialog로 이미지를 불러와 파일 검사 후 캔버스에 크기 맞춰 올리기 (열기 버튼에 Click 이벤트 할당)
+  - Filter 기능으로 열 수 있는 포맷 제한
+  - catch로 오류 있는 파일 감지
+  - trackbar로 확대/축소 기능 추가
+  - 배율 계산 로직 추가(GetRealCoordinate 함수 추가)로 확대하고 나서도 정밀한 위치에 그리기 가능하게 함
+    - 기존 MouseEvent에도 해당 함수를 투입하여 정밀 위치를 객체지향적으로 계산할 수 있도록 넣음
