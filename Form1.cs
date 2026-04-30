@@ -68,23 +68,25 @@ namespace SimplePaint
         private void PicCanvas_MouseDown(object sender, MouseEventArgs e)
         {
             isDrawing = true;
-            startPoint = e.Location;
+            // e.Location 대신 보정된 좌표를 저장
+            startPoint = GetRealCoordinate(e.Location);
         }
 
         private void PicCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (!isDrawing) return;
-            endPoint = e.Location;
-            picCanvas.Invalidate(); // Paint 이벤트를 발생시켜 점선 미리보기를 그림
+            // e.Location 대신 보정된 좌표를 저장
+            endPoint = GetRealCoordinate(e.Location);
+            picCanvas.Invalidate();
         }
 
         private void PicCanvas_MouseUp(object sender, MouseEventArgs e)
         {
             if (!isDrawing) return;
             isDrawing = false;
-            endPoint = e.Location;
+            // e.Location 대신 보정된 좌표를 저장
+            endPoint = GetRealCoordinate(e.Location);
 
-            // 최종적으로 비트맵(실제 그림)에 그리기
             using (Pen pen = new Pen(currentColor, currentLineWidth))
             {
                 DrawShape(canvasGraphics, pen, startPoint, endPoint);
@@ -94,13 +96,20 @@ namespace SimplePaint
 
         private void PicCanvas_Paint(object sender, PaintEventArgs e)
         {
-            if (!isDrawing) return;
+            if (!isDrawing || canvasBitmap == null) return;
 
-            // 마우스를 드래그하는 동안 화면에만 보여줄 점선 미리보기
+            // 배율 역산: 화면에 그릴 때는 실제 좌표를 화면 비율로 다시 나눠줌
+            float ratioX = (float)picCanvas.Width / canvasBitmap.Width;
+            float ratioY = (float)picCanvas.Height / canvasBitmap.Height;
+
+            Point screenStart = new Point((int)(startPoint.X * ratioX), (int)(startPoint.Y * ratioY));
+            Point screenEnd = new Point((int)(endPoint.X * ratioX), (int)(endPoint.Y * ratioY));
+
             using (Pen previewPen = new Pen(currentColor, currentLineWidth))
             {
                 previewPen.DashStyle = DashStyle.Dash;
-                DrawShape(e.Graphics, previewPen, startPoint, endPoint);
+                // 보정된 화면 좌표로 미리보기를 그림
+                DrawShape(e.Graphics, previewPen, screenStart, screenEnd);
             }
         }
 
@@ -126,6 +135,21 @@ namespace SimplePaint
                     g.DrawEllipse(pen, x, y, width, height);
                     break;
             }
+        }
+
+        private Point GetRealCoordinate(Point mousePoint)
+        {
+            if (canvasBitmap == null || picCanvas.Image == null) return mousePoint;
+
+            // PictureBox 화면 크기와 실제 Bitmap 이미지 크기의 배율(비율)을 계산
+            float ratioX = (float)canvasBitmap.Width / picCanvas.Width;
+            float ratioY = (float)canvasBitmap.Height / picCanvas.Height;
+
+            // 마우스 좌표에 배율을 곱해서 실제 도화지 상의 정확한 위치를 구함
+            int realX = (int)(mousePoint.X * ratioX);
+            int realY = (int)(mousePoint.Y * ratioY);
+
+            return new Point(realX, realY);
         }
 
         // --- 도형 선택 버튼 이벤트 ---
